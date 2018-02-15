@@ -514,7 +514,7 @@ class FeverAPI extends Handler
             }
 
             if ($num_feed_ids <= 0) {
-                $query = ' feed_id IN ('') ';
+                $query = ' feed_id IN (\'\') ';
             } else {
                 $query = trim($query, ',') . ')';
             }
@@ -557,7 +557,7 @@ class FeverAPI extends Handler
             }
 
             if ($num_ids <= 0) {
-                $query = 'id IN ('') ';
+                $query = 'id IN (\'\') ';
             } else {
                 $query = trim($query, ',') . ') ';
             }
@@ -937,7 +937,10 @@ class FeverAPI extends Handler
             || strpos($_SERVER['HTTP_USER_AGENT'], 'Mr. Reader') !== false) {
             $this->ID_HACK_FOR_MRREADER = 0;
         } else {
-            $this->ID_HACK_FOR_MRREADER = 1; // and readkit and dalvik...
+
+			// and readkit and dalvik...
+            $this->ID_HACK_FOR_MRREADER = 1;
+		}
 
 
         if (parent::before($method)) {
