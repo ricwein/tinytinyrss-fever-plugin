@@ -26,13 +26,22 @@ class FeverAPI extends Handler
      */
     private $xml;
 
+	/**
+	 * @var Db
+	 */
+	private $dbh;
+
     /**
      * @param $mixed $dbh
      * @param mixed $request
      */
     public function __construct($dbh, $request)
     {
-        $this->dbh = $dbh;
+        $this->dbh = !empty($dbh) ? $dbh : Db::get();
+
+		if (!isset($_SESSION)) {
+			session_start();
+		}
     }
 
     /**
@@ -51,12 +60,13 @@ class FeverAPI extends Handler
             if (!empty($reply) && is_array($reply)) {
                 $arr = array_merge($arr, $reply);
             }
-        }
+        } elseif (self::DEBUG) {
+			file_put_contents(self::DEBUG_FILE, 'session  : ' . json_encode($_SESSION) . "\n", FILE_APPEND);
+		}
 
 		// debug output
 		if (self::DEBUG) {
 			file_put_contents(self::DEBUG_FILE, 'answer   : ' . json_encode($arr) . "\n", FILE_APPEND);
-			file_put_contents(self::DEBUG_FILE, 'session  : ' . json_encode($_SESSION) . "\n", FILE_APPEND);
 		}
 
         if ($this->xml) {
@@ -837,7 +847,7 @@ class FeverAPI extends Handler
             db_query('UPDATE ttrss_user_entries SET unread = false, last_read = NOW() WHERE ref_id IN (SELECT id FROM (SELECT id FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id AND owner_uid = \'' . db_escape_string($_SESSION['uid']) . '\' AND unread = true AND feed_id = ' . intval($id) . ' AND date_entered < \'' . date('Y-m-d H:i:s', $before) . '\' ) as tmp)');
         }
 
-        CCache::ccache_update($id, $_SESSION["uid"], $cat);
+        CCache::ccache_update($id, $_SESSION['uid'], $cat);
     }
 
 	/**
