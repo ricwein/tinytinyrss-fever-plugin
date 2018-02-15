@@ -53,15 +53,16 @@ class FeverAPI extends Handler
             }
         }
 
+		// debug output
+		if (self::DEBUG) {
+			file_put_contents(self::DEBUG_FILE, 'answer   : ' . json_encode($arr) . "\n", FILE_APPEND);
+			file_put_contents(self::DEBUG_FILE, 'session  : ' . json_encode($_SESSION) . "\n", FILE_APPEND);
+		}
+
         if ($this->xml) {
             echo $this->array_to_xml($arr);
         } else {
             echo json_encode($arr);
-
-            // debug output
-            if (self::DEBUG) {
-                file_put_contents(self::DEBUG_FILE, 'answer   : ' . json_encode($arr) . "\n", FILE_APPEND);
-            }
         }
     }
 
@@ -143,7 +144,7 @@ class FeverAPI extends Handler
         // here comes Mr.Reader special API for logging in
         if ((strlen($apikey) === 0)
             && (isset($_REQUEST['action']))
-            && ($_REQUEST['action']=='login')
+            && ($_REQUEST['action'] === 'login')
             && (isset($_REQUEST['email']))
             && (isset($_REQUEST['password']))) {
             $email = $_REQUEST['email'];
