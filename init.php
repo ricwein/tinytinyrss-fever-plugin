@@ -96,18 +96,18 @@ class Fever extends Plugin
     }
 
     /**
-     * save new password as declared in
-     * http://www.feedafever.com/api
+     * save new password as declared in:
+     * @see http://www.feedafever.com/api
      * @return void
      */
     public function save()
     {
         if (isset($_POST['password']) && isset($_SESSION["uid"])) {
-            $result = db_query('SELECT login FROM ttrss_users WHERE id = \'' . db_escape_string($_SESSION['uid']) . '\'');
+            $result = db_query('SELECT email FROM ttrss_users WHERE id = \'' . db_escape_string($_SESSION['uid']) . '\'');
             if ($line = db_fetch_assoc($result)) {
-                $password = md5($line['login'] . ':' . $_POST['password']);
+                $password = md5($line['email'] . ':' . $_POST['password']);
                 $this->host->set($this, 'password', $password);
-                echo __('Password saved.');
+                echo __('Password saved for: ' . $line['email']);
             }
         }
     }

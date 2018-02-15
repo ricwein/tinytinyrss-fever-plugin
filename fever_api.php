@@ -148,7 +148,7 @@ class FeverAPI extends Handler
             && (isset($_REQUEST['password']))) {
             $email = $_REQUEST['email'];
             $password = $_REQUEST['password'];
-            $apikey = strtoupper(md5($email . ":" . $password));
+            $apikey = strtoupper(md5($email . ':' . $password));
 
             setcookie('fever_auth', $apikey, time() + (60 * 60 * 24 * 30));
 
