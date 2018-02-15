@@ -58,7 +58,11 @@ class Fever extends Plugin
         }
 
         $current_dirs = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
-        $plugin_dir  = array_pop($current_dirs) . '/' . array_pop($current_dirs);
+        if(count($current_dirs) < 2) {
+            return;
+        }
+        $fever_dir = array_pop($current_dirs);
+        $plugin_dir = array_pop($current_dirs);
 
         echo '<div dojoType="dijit.layout.AccordionPane" title="' . __("Fever Emulation") . '">';
         echo '<h3>' . __('Fever Emulation') . '</h3>';
@@ -84,7 +88,7 @@ class Fever extends Plugin
         echo '<button dojoType="dijit.form.Button" type="submit">' . __('Set Password') . '</button>';
         echo '</form>';
 
-        echo '<p>' . __('To login with the Fever API, set your server details in your favourite RSS application to: ') . '<code>' . get_self_url_prefix() . '/' . $plugin_dir . '/</code></p>';
+        echo '<p>' . __('To login with the Fever API, set your server details in your favourite RSS application to: ') . '<code>' . get_self_url_prefix() . '/' . $plugin_dir . '/' . $fever_dir . '/</code></p>';
         echo '<p>' . __('Additional details can be found at ') . '<a href="http://www.feedafever.com/api" target="_blank">http://www.feedafever.com/api</a></p>';
         echo '<p>' . __('Note: Due to the limitations of the API and some RSS clients (for example, Reeder on iOS), some features are unavailable: "Special" Feeds (Published / Tags / Labels / Fresh / Recent), Nested Categories (hierarchy is flattened)') . '</p>';
 
