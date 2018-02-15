@@ -9,7 +9,6 @@ This plugin is an open source module for TinyTinyRSS which simulates the Fever A
 - - -
 
 * <a href="#features">Features</a>
-* <a href="#download">Downloads</a>
 * <a href="#supported">Supported/Tested Clients</a>
 * <a href="#installation">Installation</a>
 * <a href="#debug">Debugging</a>
@@ -27,10 +26,6 @@ Following Features are implemented:
 * setting starred marker for item(s)
 * hot is **not** supported
 
-## <a name="downloads">Downloads</a>
-
-Please click on [```releases```](https://github.com/dasmurphy/tinytinyrss-fever-plugin/releases) button to download the latest stable version. Or click the [```Download ZIP```](https://github.com/dasmurphy/tinytinyrss-fever-plugin/archive/master.zip) button to download the edge version. ;)
-
 ## <a name="supported">Supported/Tested Clients</a>
 
 These clients should be working fine with this API emulation.
@@ -46,17 +41,19 @@ These clients should be working fine with this API emulation.
 
 **IMPORTENT** Enable external API access in your TinyTinyRSS installation! Otherwise this will not work!
 
-Upload the ```fever``` folder in the ```plugins``` folder of your TinyTinyRSS installation. Enable the plugin in the preferences and set your password for the Fever API.
+Navigate into your TinyTinyRSS installation directory. Run `git clone https://github.com/ricwein/tinytinyrss-fever-plugin.git plugins.local/fever` to download the repository. Done.
+
+Enable the plugin in the preferences and set your password for the Fever API.
 
 See [here](http://tt-rss.org/forum/viewtopic.php?f=22&t=1981) for more detailed informations.
 
 ## <a name="debug">Debugging</a>
 
-In the file ```fever_api.php``` there are two flags for debugging at the beginning of the file.
+In the file `fever_api.php` there are two flags for debugging at the beginning of the file.
 
-* ```DEBUG``` - set this to true to get a fever_debug.txt file in your root folder of the Tiny Tiny RSS installation.
-* ```DEBUG_USER``` - set this to the id (from ttrss_users) of your user you would like to always authenticate on your Tiny Tiny RSS installation. The authentication process is then skipped and the api gets always authentication.
-* ```DEBUG_FILE``` - set this to a filename that suits you for debugging this plugin if you need to.
+* `DEBUG` - set this to true to get a fever_debug.txt file in your root folder of the Tiny Tiny RSS installation.
+* `DEBUG_USER` - set this to the id (from ttrss_users) of your user you would like to always authenticate on your Tiny Tiny RSS installation. The authentication process is then skipped and the api gets always authentication.
+* `DEBUG_FILE` - set this to a filename that suits you for debugging this plugin if you need to.
 
 ## <a name="error">Error reporting</a>
 
@@ -81,7 +78,7 @@ v1.3 - 2013/6/27
 * fixed several bugs in json output from the plugin
 * added a small fix for Mr.Reader 2.0 so it can complete loading of all items (see [FAQ](http://www.curioustimes.de/mrreader/faq/))
 * added first Mr.Reader compatiblity without marking items read/starred
-* changed the field ```date_entered``` to ```updated``` for better reading experience
+* changed the field `date_entered` to `updated` for better reading experience
 
 v1.4 - 2013/6/28
 
@@ -94,11 +91,11 @@ v1.4.1 - 2013/6/28
 
 v1.4.2 - 2013/6/28
 
-* changed the ```DEBUG_USER``` evaluation a little bit for disabling authentication without DEBUG = true
+* changed the `DEBUG_USER` evaluation a little bit for disabling authentication without DEBUG = true
 
 v1.4.3 - 2013/6/28
 
-* added ```DEBUG_FILE``` to debug configuration
+* added `DEBUG_FILE` to debug configuration
 * changed authentication call from Mr.Reader so that the reply is also uppercase, since the API-KEY comes in uppercase from clients
 * fixed debug output while authentication in Mr.Reader with displaying the email adress
 
@@ -118,3 +115,9 @@ v1.4.6 - 2014/1/15
 v1.4.7 - 2014/1/15
 
 * added rewrite url function to module, since it was removed from tinytinyrss
+
+v2.0 - 2018/2/15
+
+* fixes ttrss 17.4 compatibility
+* switch DB-usage to ttrss-provided `PDO`
+* the fever-api-authentication now correctly uses the users email-address instead of the username as login-credentials
