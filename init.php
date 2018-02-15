@@ -103,11 +103,14 @@ class Fever extends Plugin
     public function save()
     {
         if (isset($_POST['password']) && isset($_SESSION["uid"])) {
-            $result = db_query('SELECT email FROM ttrss_users WHERE id = \'' . db_escape_string($_SESSION['uid']) . '\'');
-            if ($line = db_fetch_assoc($result)) {
-                $password = md5($line['email'] . ':' . $_POST['password']);
+
+            $query = $this->pdo->prepare('SELECT email FROM ttrss_users WHERE id = :id');
+            $query->execute(array(':id' => $_SESSION['uid']));
+
+            if ($row = $query->fetch(\PDO::FETCH_ASSOC)) {
+                $password = md5($row['email'] . ':' . $_POST['password']);
                 $this->host->set($this, 'password', $password);
-                echo __('Password saved for: ' . $line['email']);
+                echo __('Password saved for: ' . $row['email']);
             }
         }
     }
