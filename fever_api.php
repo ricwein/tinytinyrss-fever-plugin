@@ -779,7 +779,7 @@ class FeverAPI extends Handler
 				$querySelect = $this->pdo->prepare('SELECT DISTINCT feed_id FROM ttrss_user_entries WHERE ref_id IN (' . $article_ids . ')');
 				$querySelect->execute();
 
-                while ($row = $query->fetch(\PDO::FETCH_ASSOC)) {
+                while ($row = $querySelect->fetch(\PDO::FETCH_ASSOC)) {
                     CCache::ccache_update($row['feed_id'], $_SESSION['uid']);
                 }
             }
