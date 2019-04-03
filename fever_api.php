@@ -780,7 +780,7 @@ class FeverAPI extends Handler
 				$querySelect->execute();
 
                 while ($row = $querySelect->fetch(\PDO::FETCH_ASSOC)) {
-                    CCache::ccache_update($row['feed_id'], $_SESSION['uid']);
+                    CCache::update($row['feed_id'], $_SESSION['uid']);
                 }
             }
         }
@@ -862,7 +862,7 @@ class FeverAPI extends Handler
 			$query->execute(array(':ownerID' => $_SESSION['uid'], ':id' => (int) $id, ':date' => date('Y-m-d H:i:s', $before)));
         }
 
-        CCache::ccache_update($id, $_SESSION['uid'], $cat);
+        CCache::update($id, $_SESSION['uid'], $cat);
     }
 
 	/**
