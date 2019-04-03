@@ -42,7 +42,7 @@ if (!init_plugins()) {
     return;
 }
 
-$handler = new FeverAPI(Db::get(), $_REQUEST);
+$handler = new FeverAPI($_REQUEST);
 
 if ($handler->before($method)) {
     if (method_exists($handler, 'index')) {
